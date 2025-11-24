@@ -4,8 +4,8 @@ pipeline {
     environment {
         PROJECT_NAME = "pipeline-test"
         SONARQUBE_URL = "http://sonarqube:9000"
-        SONARQUBE_TOKEN = "sqa_8b3bc3d9dadd0e6b3221285d9e3481748a799219"
-        TARGET_URL = "http://172.23.41.49:5000"
+        SONARQUBE_TOKEN = "sqa_c55eac4adc50abc8747fbe05a4fe552a0c7a3341"
+        TARGET_URL = "http://172.19.200.52:5000"
     }
 
     stages {
@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh '''
                     apt update
-                    apt install -y python3 python3-venv python3-pip
+                    apt install -y python3 python3-venv python3-pip doxygen
                 '''
             }
         }
@@ -28,6 +28,13 @@ pipeline {
                 '''
             }
         }
+
+        stage('Generar Documentacion') {
+            steps {
+                sh 'doxygen Doxyfile'
+            }
+        }
+
         stage('Python Security Audit') {
             steps {
                 sh '''
@@ -73,6 +80,15 @@ pipeline {
                     reportDir: 'dependency-check-report',
                     reportFiles: 'dependency-check-report.html',
                     reportName: 'OWASP Dependency Check Report'
+                ])
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'docs/html',        // Carpeta generada por Doxygen
+                    reportFiles: 'index.html',     // Archivo principal
+                    reportName: 'Doxygen Docs',    // Nombre del botón en Jenkins
+                    reportTitles: 'Documentación del Código'
                 ])
             }
         }
