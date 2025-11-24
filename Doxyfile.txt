@@ -1,0 +1,25 @@
+# Configuración básica para Doxygen con Python
+PROJECT_NAME           = "Pipeline Vulnerable Python"
+PROJECT_NUMBER         = 1.0
+OUTPUT_DIRECTORY       = docs
+
+# Indica dónde buscar el código (el punto es la carpeta actual)
+INPUT                  = .
+RECURSIVE              = YES
+
+# Optimización para Python
+OPTIMIZE_OUTPUT_JAVA   = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+
+# Configuración de salida HTML (Para el plugin de Jenkins)
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+
+# Desactivar Latex para ahorrar tiempo
+GENERATE_LATEX         = NO
+
+# Para que incluya el código fuente en la documentación
+SOURCE_BROWSER         = YES
