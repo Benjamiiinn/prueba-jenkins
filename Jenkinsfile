@@ -55,6 +55,7 @@ pipeline {
                             ${scannerHome}/bin/sonar-scanner \
                                 -Dsonar.projectKey=$PROJECT_NAME \
                                 -Dsonar.sources=. \
+                                -Dsonar.exclusions=docs/**/*,venv/**/*,dependency-check-report/**/* \
                                 -Dsonar.host.url=$SONARQUBE_URL \
                                 -Dsonar.login=$SONARQUBE_TOKEN
                         """
