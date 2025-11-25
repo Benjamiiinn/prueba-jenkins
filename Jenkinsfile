@@ -55,9 +55,13 @@ pipeline {
                             ${scannerHome}/bin/sonar-scanner \
                                 -Dsonar.projectKey=$PROJECT_NAME \
                                 -Dsonar.sources=. \
+                                -Dsonar.inclusions=vulnerable_server.py
                                 -Dsonar.host.url=$SONARQUBE_URL \
                                 -Dsonar.login=$SONARQUBE_TOKEN
                         """
+                    }
+                    timeout(time: 5, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: true
                     }
                 }
             }
